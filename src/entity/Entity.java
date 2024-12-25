@@ -12,7 +12,7 @@ public class Entity {
     int gravity = 1;
     int jumpStrength = -20;
     public boolean jump = false;
-    boolean faceRight = true;
+    public boolean faceRight = true;
     public boolean isDash = false;
     int dash = 20;
     public boolean dashAvailable = true;

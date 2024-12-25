@@ -107,10 +107,9 @@ public class GamePanel extends JPanel implements Runnable{
         player1.solidArea.setLocation(player1.x, player1.y);
         player2.solidArea.setLocation(player2.x, player2.y);
 
-        if(player1.solidArea.intersects((player2.solidArea))){
-            winMessage = "Player 1 Wins!";
-            isPaused = true;
-            pauseTime = System.currentTimeMillis() + 1000;
+        if(player1.solidArea.intersects((player2.solidArea)) || player2.solidArea.intersects(player1.solidArea)){
+            whoWins();
+
             /*try{
                 Thread.sleep(1000);
             }catch (InterruptedException e) {
@@ -120,6 +119,59 @@ public class GamePanel extends JPanel implements Runnable{
         }
 
     }
+
+    public void whoWins(){
+        if(keyh.rock1 == true && keyh.rock2 == true ||
+           keyh.paper1 == true && keyh.paper2 == true ||
+           keyh.scissor1 == true && keyh.scissor2 == true){
+
+            Rectangle intersect = player1.solidArea.intersection(player2.solidArea);
+
+            if(!intersect.isEmpty()){
+                if (intersect.width > intersect.height) {
+                    // Push vertically
+                    if (player1.y < player2.y){
+                        player1.y = Math.min(player1.y - intersect.height,400);
+                        if(player1.faceRight) player1.x += intersect.height;
+                        else player1.x -= intersect.height;
+                    }
+                    else{
+                        player2.y = Math.min(player2.y - intersect.height,400);
+                        if(player2.faceRight) player2.x += intersect.height;
+                        else player2.x -= intersect.height;
+                    }
+                } else {
+                    // Push horizontally
+                    if (player1.x < player2.x) player1.x -= intersect.width;
+                    else player2.x -= intersect.width;
+                }
+            }
+
+//            if(player1.solidArea.intersects(new Rectangle(player2.x - playerSpeed,player2.y,48,48))){
+//                player1.x -= playerSpeed;
+//            }else if(player1.solidArea.intersects(new Rectangle(player2.x + playerSpeed,player2.y,48,48))){
+//                player1.x += playerSpeed;
+//            }
+//
+//            if(player2.solidArea.intersects(new Rectangle(player1.x - playerSpeed,player1.y,48,48))){
+//                player2.x -= playerSpeed;
+//            }else if(player2.solidArea.intersects(new Rectangle(player1.x + playerSpeed,player1.y,48,48))){
+//                player2.x += playerSpeed;
+//            }
+            return;
+        }else{
+            if(keyh.rock1 == true && keyh.scissor2 == true||
+               keyh.paper1 == true && keyh.rock2 == true ||
+               keyh.scissor1 == true && keyh.paper2 == true){
+                winMessage = "Player 1 Wins!";
+            }else{
+                winMessage = "Player 2 Wins!";
+            }
+            isPaused = true;
+            pauseTime = System.currentTimeMillis() + 1000;
+        }
+    }
+
     public void paintComponent(Graphics g){
 
         super.paintComponent(g);
@@ -148,3 +200,5 @@ public class GamePanel extends JPanel implements Runnable{
         g2.dispose();
     }
 }
+
+

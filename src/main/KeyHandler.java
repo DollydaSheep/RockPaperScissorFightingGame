@@ -7,8 +7,8 @@ public class KeyHandler implements KeyListener {
 
     public boolean upPressed1, downPressed1, leftPressed1, rightPressed1
             ,upPressed2,downPressed2,leftPressed2,rightPressed2
-            ,rock1,paper1,scissor1
-            ,rock2,paper2,scissor2;
+            ,rock1 = true,paper1,scissor1
+            ,rock2 = true,paper2,scissor2;
 
     @Override
     public void keyTyped(KeyEvent e) {

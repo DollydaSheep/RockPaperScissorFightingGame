@@ -55,10 +55,18 @@ public class Player2 extends Entity{
         if(isDash){
             if(x==currentX+120 || x==currentX-120) {
                 isDash = false;
-                keyh.downPressed2 = false;
+                keyh.downPressed1 = false;
             }
-            if(faceRight) x += dash;
-            else x -= dash;
+            if(faceRight){
+                speed = dash;
+                x += speed;
+            }
+            else{
+                speed = dash;
+                x -= dash;
+            }
+        }else{
+            speed = 4;
         }
 
         if(x < 0 ){
@@ -83,6 +91,12 @@ public class Player2 extends Entity{
                 jump = false;
                 velocityY = 0;
             }
+        }
+        if(y > 400){
+            y = 400;
+            keyh.upPressed2 = false;
+            jump = false;
+            velocityY = 0;
         }
     }
 
